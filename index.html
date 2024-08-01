@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redeeming Time</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
 </head>
 <body>
     <header>
@@ -17,30 +18,57 @@
             <li><a href="about.html">About Us</a></li>
         </ul>
     </nav>
-    <section class="intro">
-        <h2>Supporting Reintegration & Community Empowerment</h2>
-        <p>What is Pathway Forward?</p>
-        <p>Pathway Forward aims to empower individuals who have served time in jail, prison, probation, or on parole by providing comprehensive support, resources, and opportunities for successful reintegration into society.</p>
-    </section>
-    <section class="mission">
-        <h2>Mission Statement</h2>
-        <p>To build a community where every individual has the tools and support needed to forge a positive future.</p>
-    </section>
-    <section class="values">
-        <h2>Core Values</h2>
-        <ul>
-            <li>Empowerment</li>
-            <li>Community</li>
-            <li>Hope</li>
-            <li>Opportunity</li>
-        </ul>
-    </section>
-    <section class="why">
-        <h2>Why Pathway Forward Matters</h2>
-        <p>Reducing Recidivism Rates: Offering resources and support to decrease the likelihood of re-offense</p>
-        <p>Community Safety: By supporting successful reintegration, we contribute to safer communities</p>
-        <p>Economic Benefits: Reducing incarceration costs and promoting workforce participation</p>
-    </section>
+    <main>
+        <div class="tab-container">
+            <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
+            <button class="tablinks" onclick="openTab(event, 'about')">About Us</button>
+            <button class="tablinks" onclick="openTab(event, 'mission')">Our Mission</button>
+            <button class="tablinks" onclick="openTab(event, 'features')">Key Features</button>
+            <button class="tablinks" onclick="openTab(event, 'video')">Video Calls</button>
+            <button class="tablinks" onclick="openTab(event, 'calendar')">Calendar</button>
+            <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
+        </div>
+
+        <div id="home" class="tabcontent">
+            <h2>Supporting Reintegration & Community Empowerment</h2>
+            <p>What is Pathway Forward?</p>
+            <p>Pathway Forward aims to empower individuals who have served time in jail, prison, probation, or on parole by providing comprehensive support, resources, and opportunities for successful reintegration into society.</p>
+        </div>
+
+        <div id="about" class="tabcontent">
+            <h2>About Us</h2>
+            <p>Information about our organization.</p>
+        </div>
+
+        <div id="mission" class="tabcontent">
+            <h2>Our Mission</h2>
+            <p>To build a community where every individual has the tools and support needed to forge a positive future.</p>
+        </div>
+
+        <div id="features" class="tabcontent">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Zoom Calls: Scheduled virtual meetings for community support and resource sharing</li>
+                <li>Event Calendars: Listings of job fairs, educational workshops, community services, and other relevant events</li>
+                <li>Progress Tracking: Tools to monitor educational milestones and personal development goals</li>
+            </ul>
+        </div>
+
+        <div id="video" class="tabcontent">
+            <h2>Video Calls</h2>
+            <p>Details about our video call support system.</p>
+        </div>
+
+        <div id="calendar" class="tabcontent">
+            <h2>Calendar</h2>
+            <p>Our event calendar.</p>
+        </div>
+
+        <div id="login" class="tabcontent">
+            <h2>Login</h2>
+            <p>Login form for our users.</p>
+        </div>
+    </main>
     <footer>
         <p>&copy; 2024 Redeeming Time. All rights reserved.</p>
     </footer>
