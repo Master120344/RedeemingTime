@@ -6,6 +6,7 @@
     <title>Redeeming Time</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <header>
@@ -15,9 +16,9 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -31,13 +32,13 @@
         </section>
         <div class="tab-container">
             <div class="container">
-                <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
-                <button class="tablinks" onclick="openTab(event, 'about')">About Us</button>
-                <button class="tablinks" onclick="openTab(event, 'mission')">Our Mission</button>
-                <button class="tablinks" onclick="openTab(event, 'features')">Key Features</button>
-                <button class="tablinks" onclick="openTab(event, 'video')">Video Calls</button>
-                <button class="tablinks" onclick="openTab(event, 'calendar')">Calendar</button>
-                <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
+                <button class="tablinks" onclick="openTab(event, 'home')"><i class="fas fa-home"></i> Home</button>
+                <button class="tablinks" onclick="openTab(event, 'about')"><i class="fas fa-info-circle"></i> About Us</button>
+                <button class="tablinks" onclick="openTab(event, 'mission')"><i class="fas fa-bullseye"></i> Our Mission</button>
+                <button class="tablinks" onclick="openTab(event, 'features')"><i class="fas fa-star"></i> Key Features</button>
+                <button class="tablinks" onclick="openTab(event, 'video')"><i class="fas fa-video"></i> Video Calls</button>
+                <button class="tablinks" onclick="openTab(event, 'calendar')"><i class="fas fa-calendar"></i> Calendar</button>
+                <button class="tablinks" onclick="openTab(event, 'login')"><i class="fas fa-sign-in-alt"></i> Login</button>
             </div>
         </div>
 
@@ -84,7 +85,7 @@
                     <input type="text" id="username" name="username" required>
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
-                    <button type="submit">Login</button>
+                    <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
                 </form>
             </div>
         </div>
