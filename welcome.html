@@ -61,11 +61,22 @@
             document.getElementById('zipCodeForm').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const zipcode = document.getElementById('zipcode').value;
-                if (zipcode === '78745') {
-                    window.location.href = 'area.html?username=' + username;
-                } else {
-                    alert('Sorry, we currently only support the 78745 area code.');
-                }
+                fetch(`https://api.zippopotam.us/us/${zipcode}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('ZIP code not found');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const place = data.places[0];
+                        const city = place['place name'];
+                        const state = place['state'];
+                        window.location.href = `area.html?username=${encodeURIComponent(username)}&zipcode=${zipcode}&city=${encodeURIComponent(city)}&state=${encodeURIComponent(state)}`;
+                    })
+                    .catch(error => {
+                        alert('Sorry, we could not find that ZIP code. Please try again.');
+                    });
             });
         });
     </script>
