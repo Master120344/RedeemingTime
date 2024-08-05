@@ -37,8 +37,61 @@
         </section>
         <div class="container">
             <div class="content">
-                <h2>Resources Available in 78745</h2>
-                <ul>
-                    <li><strong>South Austin Community Center:</strong> Offers various support services, including job training and mental health counseling.</li>
-                    <li><strong>Workforce Solutions Capital Area:</strong> Provides job search assistance, resume workshops, and career counseling.</li>
-                    <li><strong>Central Texas Food Bank:</strong> Access to food and nutrition programs for individuals and families in need.</
+                <h2>Resources Available in <span id="city"></span>, <span id="state"></span> (<span id="zipcode"></span>)</h2>
+                <ul id="resources">
+                    <!-- Resources will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Redeeming Time. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the username and zipcode from the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            const zipcode = urlParams.get('zipcode');
+            const city = urlParams.get('city');
+            const state = urlParams.get('state');
+
+            document.getElementById('username').textContent = username;
+            document.getElementById('zipcode').textContent = zipcode;
+            document.getElementById('city').textContent = city;
+            document.getElementById('state').textContent = state;
+
+            // Fetch and display resources based on the ZIP code
+            // For demonstration purposes, we will add some static data
+            const resources = {
+                '78701': [
+                    { name: 'Downtown Austin Community Center', description: 'Job training and mental health services.' },
+                    { name: 'Austin Central Library', description: 'Educational resources and internet access.' }
+                ],
+                '78702': [
+                    { name: 'East Austin Neighborhood Center', description: 'Support services and community events.' },
+                    { name: 'Austin Public Library - Carver Branch', description: 'Educational resources and community programs.' }
+                ],
+                '78703': [
+                    { name: 'West Austin Youth Association', description: 'Youth programs and recreational activities.' },
+                    { name: 'Austin Public Library - Howson Branch', description: 'Community events and educational resources.' }
+                ],
+                // Add more ZIP codes and their resources here
+            };
+
+            const resourceList = resources[zipcode] || [
+                { name: 'General Resource Center', description: 'Various community support services available.' }
+            ];
+
+            const resourceContainer = document.getElementById('resources');
+            resourceList.forEach(resource => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong>${resource.name}:</strong> ${resource.description}`;
+                resourceContainer.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
