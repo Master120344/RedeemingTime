@@ -38,7 +38,7 @@
         <div class="container">
             <div class="content">
                 <h2>Login</h2>
-                <form>
+                <form id="loginForm">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
                     <label for="password">Password:</label>
@@ -54,5 +54,12 @@
             <p>&copy; 2024 Redeeming Time. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            window.location.href = 'welcome.html?username=' + encodeURIComponent(username);
+        });
+    </script>
 </body>
 </html>
