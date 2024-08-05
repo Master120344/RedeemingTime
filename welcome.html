@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Redeeming Time</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Redeeming Time</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="mission.html"><i class="fas fa-bullseye"></i> Our Mission</a></li>
+                    <li><a href="features.html"><i class="fas fa-star"></i> Key Features</a></li>
+                    <li><a href="video.html"><i class="fas fa-video"></i> Video Calls</a></li>
+                    <li><a href="calendar.html"><i class="fas fa-calendar"></i> Calendar</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Welcome</h2>
+                <p>Welcome, <span id="username"></span>!</p>
+            </div>
+        </section>
+        <div class="container">
+            <div class="content">
+                <h2>Enter Your ZIP Code</h2>
+                <form id="zipCodeForm">
+                    <label for="zipcode">ZIP Code:</label>
+                    <input type="text" id="zipcode" name="zipcode" required>
+                    <button type="submit"><i class="fas fa-search-location"></i> Submit</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Redeeming Time. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the username from the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            document.getElementById('username').textContent = username;
+
+            document.getElementById('zipCodeForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const zipcode = document.getElementById('zipcode').value;
+                if (zipcode === '78745') {
+                    window.location.href = 'area.html?username=' + username;
+                } else {
+                    alert('Sorry, we currently only support the 78745 area code.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
