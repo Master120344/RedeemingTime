@@ -18,6 +18,11 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="mission.html"><i class="fas fa-bullseye"></i> Our Mission</a></li>
+                    <li><a href="features.html"><i class="fas fa-star"></i> Key Features</a></li>
+                    <li><a href="video.html"><i class="fas fa-video"></i> Video Calls</a></li>
+                    <li><a href="calendar.html"><i class="fas fa-calendar"></i> Calendar</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
                     <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </nav>
@@ -32,13 +37,14 @@
         </section>
         <div class="tab-container">
             <div class="container">
-                <button class="tablinks" onclick="openTab(event, 'home')"><i class="fas fa-home"></i> Home</button>
-                <button class="tablinks" onclick="openTab(event, 'about')"><i class="fas fa-info-circle"></i> About Us</button>
-                <button class="tablinks" onclick="openTab(event, 'mission')"><i class="fas fa-bullseye"></i> Our Mission</button>
-                <button class="tablinks" onclick="openTab(event, 'features')"><i class="fas fa-star"></i> Key Features</button>
-                <button class="tablinks" onclick="openTab(event, 'video')"><i class="fas fa-video"></i> Video Calls</button>
-                <button class="tablinks" onclick="openTab(event, 'calendar')"><i class="fas fa-calendar"></i> Calendar</button>
-                <button class="tablinks" onclick="openTab(event, 'login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <a href="index.html" class="tablinks"><i class="fas fa-home"></i> Home</a>
+                <a href="about.html" class="tablinks"><i class="fas fa-info-circle"></i> About Us</a>
+                <a href="mission.html" class="tablinks"><i class="fas fa-bullseye"></i> Our Mission</a>
+                <a href="features.html" class="tablinks"><i class="fas fa-star"></i> Key Features</a>
+                <a href="video.html" class="tablinks"><i class="fas fa-video"></i> Video Calls</a>
+                <a href="calendar.html" class="tablinks"><i class="fas fa-calendar"></i> Calendar</a>
+                <a href="login.html" class="tablinks"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="contact.html" class="tablinks"><i class="fas fa-envelope"></i> Contact</a>
             </div>
         </div>
 
@@ -50,32 +56,49 @@
 
             <div id="about" class="tabcontent">
                 <h2>About Us</h2>
-                <p>Information about our organization.</p>
+                <p>Redeeming Time is a nonprofit organization dedicated to empowering individuals who have served time in jail, prison, probation, or on parole. Our goal is to provide comprehensive support, resources, and opportunities for successful reintegration into society.</p>
             </div>
 
             <div id="mission" class="tabcontent">
                 <h2>Our Mission</h2>
-                <p>To build a community where every individual has the tools and support needed to forge a positive future.</p>
+                <p>At Redeeming Time, our mission is to build a supportive community where individuals who have served time can find the resources, support, and opportunities they need to successfully reintegrate into society and lead fulfilling lives.</p>
             </div>
 
             <div id="features" class="tabcontent">
                 <h2>Key Features</h2>
                 <ul>
-                    <li>Zoom Calls: Scheduled virtual meetings for community support and resource sharing</li>
-                    <li>Event Calendars: Listings of job fairs, educational workshops, community services, and other relevant events</li>
-                    <li>Progress Tracking: Tools to monitor educational milestones and personal development goals</li>
-                    <li>Resource Directory: Access to local resources and support services</li>
+                    <li><strong>Zoom Calls:</strong> Scheduled virtual meetings for community support and resource sharing.</li>
+                    <li><strong>Event Calendars:</strong> Listings of job fairs, educational workshops, community services, and other relevant events.</li>
+                    <li><strong>Progress Tracking:</strong> Tools to monitor educational milestones and personal development goals.</li>
+                    <li><strong>Resource Directory:</strong> Access to local resources and support services.</li>
                 </ul>
             </div>
 
             <div id="video" class="tabcontent">
                 <h2>Video Calls</h2>
-                <p>Details about our video call support system.</p>
+                <p>Our video calls are conducted via Zoom, providing a platform for community support, resource sharing, and group discussions. Below are some categories for different topics you might want to join for video chats:</p>
+                <h3>Categories</h3>
+                <ul>
+                    <li><strong>Job Search Support:</strong> Discussions on job hunting strategies, resume building, and interview preparation.</li>
+                    <li><strong>Mental Health Support:</strong> Access to group counseling sessions and mental health discussions.</li>
+                    <li><strong>Educational Workshops:</strong> Sessions on continuing education, skill-building, and professional development.</li>
+                    <li><strong>Community Services:</strong> Information and support on accessing community services and resources.</li>
+                    <li><strong>Peer Support Groups:</strong> Meetings to share experiences, provide mutual support, and build a community.</li>
+                    <li><strong>Legal Advice:</strong> Access to legal professionals for advice and information on various legal matters.</li>
+                </ul>
             </div>
 
             <div id="calendar" class="tabcontent">
                 <h2>Calendar</h2>
-                <p>Our event calendar.</p>
+                <div class="calendar">
+                    <p>Here, you can add a calendar widget or manually input event details.</p>
+                    <ul>
+                        <li><strong>Job Fair:</strong> August 15, 2024 - 10:00 AM to 2:00 PM</li>
+                        <li><strong>Resume Building Workshop:</strong> August 20, 2024 - 1:00 PM to 3:00 PM</li>
+                        <li><strong>Community Service Event:</strong> August 25, 2024 - 9:00 AM to 12:00 PM</li>
+                        <li><strong>Mental Health Support Group:</strong> August 30, 2024 - 4:00 PM to 5:30 PM</li>
+                    </ul>
+                </div>
             </div>
 
             <div id="login" class="tabcontent">
@@ -87,6 +110,7 @@
                     <input type="password" id="password" name="password" required>
                     <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
                 </form>
+                <p>Don't have an account? <a href="signup.html">Sign up here</a>.</p>
             </div>
         </div>
     </main>
