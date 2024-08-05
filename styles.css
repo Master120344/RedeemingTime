@@ -161,6 +161,25 @@ form button:hover {
     transform: scale(1.05);
 }
 
+/* Icon colors */
+nav ul li a .fa-home:hover { color: #4caf50; }
+nav ul li a .fa-info-circle:hover { color: #2196f3; }
+nav ul li a .fa-bullseye:hover { color: #ff9800; }
+nav ul li a .fa-star:hover { color: #ffeb3b; }
+nav ul li a .fa-video:hover { color: #e91e63; }
+nav ul li a .fa-calendar:hover { color: #9c27b0; }
+nav ul li a .fa-sign-in-alt:hover { color: #00bcd4; }
+nav ul li a .fa-envelope:hover { color: #ff5722; }
+
+.tablinks .fa-home:hover { color: #4caf50; }
+.tablinks .fa-info-circle:hover { color: #2196f3; }
+.tablinks .fa-bullseye:hover { color: #ff9800; }
+.tablinks .fa-star:hover { color: #ffeb3b; }
+.tablinks .fa-video:hover { color: #e91e63; }
+.tablinks .fa-calendar:hover { color: #9c27b0; }
+.tablinks .fa-sign-in-alt:hover { color: #00bcd4; }
+.tablinks .fa-envelope:hover { color: #ff5722; }
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .hero h2 {
