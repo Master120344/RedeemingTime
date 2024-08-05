@@ -7,8 +7,8 @@
 }
 
 body {
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #121212;
+    color: #e0e0e0;
     line-height: 1.6;
 }
 
@@ -19,15 +19,16 @@ body {
 }
 
 header {
-    background-color: #00796b;
+    background-color: #1b5e20;
     color: #fff;
     padding: 1rem 0;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header .logo h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2.5rem;
 }
 
 nav ul {
@@ -35,7 +36,7 @@ nav ul {
     padding: 0;
     display: flex;
     justify-content: center;
-    margin: 0;
+    margin: 1rem 0 0 0;
 }
 
 nav ul li {
@@ -45,7 +46,7 @@ nav ul li {
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
     transition: color 0.3s;
 }
 
@@ -54,7 +55,7 @@ nav ul li a:hover {
 }
 
 .hero {
-    background: linear-gradient(rgba(0, 121, 107, 0.7), rgba(0, 121, 107, 0.7)), url('hero-image.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(27, 94, 32, 0.7), rgba(27, 94, 32, 0.7)), url('hero-image.jpg') no-repeat center center/cover;
     color: #fff;
     text-align: center;
     padding: 5rem 1rem;
@@ -66,7 +67,7 @@ nav ul li a:hover {
 }
 
 .tab-container {
-    background-color: #004d40;
+    background-color: #1b5e20;
     padding: 1rem 0;
 }
 
@@ -77,11 +78,11 @@ nav ul li a:hover {
 }
 
 .tablinks {
-    background-color: #004d40;
+    background-color: #1b5e20;
     color: #fff;
-    padding: 1rem;
-    margin: 0.2rem;
-    border: none;
+    padding: 1rem 1.5rem;
+    margin: 0.5rem;
+    border: 1px solid #4caf50;
     cursor: pointer;
     font-size: 1rem;
     border-radius: 5px;
@@ -89,16 +90,17 @@ nav ul li a:hover {
 }
 
 .tablinks:hover {
-    background-color: #00796b;
+    background-color: #4caf50;
     transform: scale(1.05);
 }
 
 .tabcontent {
     display: none;
     padding: 2rem;
-    background-color: #fff;
+    background-color: #333;
+    color: #e0e0e0;
     margin: 2rem 0;
-    border: 1px solid #ddd;
+    border: 1px solid #4caf50;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -108,7 +110,7 @@ nav ul li a:hover {
 }
 
 footer {
-    background-color: #004d40;
+    background-color: #1b5e20;
     color: #fff;
     text-align: center;
     padding: 1rem 0;
@@ -132,15 +134,21 @@ form input {
     margin-bottom: 1rem;
     padding: 0.75rem;
     font-size: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #4caf50;
     border-radius: 5px;
+    background-color: #222;
+    color: #e0e0e0;
+}
+
+form input::placeholder {
+    color: #999;
 }
 
 form button {
     padding: 0.75rem;
-    background-color: #00796b;
+    background-color: #1b5e20;
     color: #fff;
-    border: none;
+    border: 1px solid #4caf50;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
@@ -148,7 +156,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #004d40;
+    background-color: #4caf50;
     transform: scale(1.05);
 }
 
@@ -174,4 +182,9 @@ form button:hover {
 /* Active tab content */
 .tabcontent.active {
     display: block;
+}
+
+/* Icon styles */
+i.fas {
+    margin-right: 8px;
 }
