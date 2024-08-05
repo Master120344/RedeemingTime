@@ -9,80 +9,90 @@
 </head>
 <body>
     <header>
-        <div class="logo">
-            <h1>Redeeming Time</h1>
+        <div class="container">
+            <div class="logo">
+                <h1>Redeeming Time</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
     </header>
     <main>
         <section class="hero">
-            <h2>Welcome to Redeeming Time</h2>
-            <p>Empowering Second Chances</p>
+            <div class="container">
+                <h2>Welcome to Redeeming Time</h2>
+                <p>Empowering Second Chances</p>
+            </div>
         </section>
         <div class="tab-container">
-            <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
-            <button class="tablinks" onclick="openTab(event, 'about')">About Us</button>
-            <button class="tablinks" onclick="openTab(event, 'mission')">Our Mission</button>
-            <button class="tablinks" onclick="openTab(event, 'features')">Key Features</button>
-            <button class="tablinks" onclick="openTab(event, 'video')">Video Calls</button>
-            <button class="tablinks" onclick="openTab(event, 'calendar')">Calendar</button>
-            <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
+            <div class="container">
+                <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
+                <button class="tablinks" onclick="openTab(event, 'about')">About Us</button>
+                <button class="tablinks" onclick="openTab(event, 'mission')">Our Mission</button>
+                <button class="tablinks" onclick="openTab(event, 'features')">Key Features</button>
+                <button class="tablinks" onclick="openTab(event, 'video')">Video Calls</button>
+                <button class="tablinks" onclick="openTab(event, 'calendar')">Calendar</button>
+                <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
+            </div>
         </div>
 
-        <div id="home" class="tabcontent">
-            <h2>Supporting Reintegration & Community Empowerment</h2>
-            <p>Pathway Forward aims to empower individuals who have served time in jail, prison, probation, or on parole by providing comprehensive support, resources, and opportunities for successful reintegration into society.</p>
-        </div>
+        <div class="container">
+            <div id="home" class="tabcontent">
+                <h2>Supporting Reintegration & Community Empowerment</h2>
+                <p>Pathway Forward aims to empower individuals who have served time in jail, prison, probation, or on parole by providing comprehensive support, resources, and opportunities for successful reintegration into society.</p>
+            </div>
 
-        <div id="about" class="tabcontent">
-            <h2>About Us</h2>
-            <p>Information about our organization.</p>
-        </div>
+            <div id="about" class="tabcontent">
+                <h2>About Us</h2>
+                <p>Information about our organization.</p>
+            </div>
 
-        <div id="mission" class="tabcontent">
-            <h2>Our Mission</h2>
-            <p>To build a community where every individual has the tools and support needed to forge a positive future.</p>
-        </div>
+            <div id="mission" class="tabcontent">
+                <h2>Our Mission</h2>
+                <p>To build a community where every individual has the tools and support needed to forge a positive future.</p>
+            </div>
 
-        <div id="features" class="tabcontent">
-            <h2>Key Features</h2>
-            <ul>
-                <li>Zoom Calls: Scheduled virtual meetings for community support and resource sharing</li>
-                <li>Event Calendars: Listings of job fairs, educational workshops, community services, and other relevant events</li>
-                <li>Progress Tracking: Tools to monitor educational milestones and personal development goals</li>
-                <li>Resource Directory: Access to local resources and support services</li>
-            </ul>
-        </div>
+            <div id="features" class="tabcontent">
+                <h2>Key Features</h2>
+                <ul>
+                    <li>Zoom Calls: Scheduled virtual meetings for community support and resource sharing</li>
+                    <li>Event Calendars: Listings of job fairs, educational workshops, community services, and other relevant events</li>
+                    <li>Progress Tracking: Tools to monitor educational milestones and personal development goals</li>
+                    <li>Resource Directory: Access to local resources and support services</li>
+                </ul>
+            </div>
 
-        <div id="video" class="tabcontent">
-            <h2>Video Calls</h2>
-            <p>Details about our video call support system.</p>
-        </div>
+            <div id="video" class="tabcontent">
+                <h2>Video Calls</h2>
+                <p>Details about our video call support system.</p>
+            </div>
 
-        <div id="calendar" class="tabcontent">
-            <h2>Calendar</h2>
-            <p>Our event calendar.</p>
-        </div>
+            <div id="calendar" class="tabcontent">
+                <h2>Calendar</h2>
+                <p>Our event calendar.</p>
+            </div>
 
-        <div id="login" class="tabcontent">
-            <h2>Login</h2>
-            <form>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <button type="submit">Login</button>
-            </form>
+            <div id="login" class="tabcontent">
+                <h2>Login</h2>
+                <form>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
         </div>
     </main>
     <footer>
-        <p>&copy; 2024 Redeeming Time. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 Redeeming Time. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html>
