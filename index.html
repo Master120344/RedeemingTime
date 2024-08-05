@@ -9,16 +9,22 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to Redeeming Time</h1>
-        <p>Empowering Second Chances</p>
+        <div class="logo">
+            <h1>Redeeming Time</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-        </ul>
-    </nav>
     <main>
+        <section class="hero">
+            <h2>Welcome to Redeeming Time</h2>
+            <p>Empowering Second Chances</p>
+        </section>
         <div class="tab-container">
             <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
             <button class="tablinks" onclick="openTab(event, 'about')">About Us</button>
@@ -26,12 +32,12 @@
             <button class="tablinks" onclick="openTab(event, 'features')">Key Features</button>
             <button class="tablinks" onclick="openTab(event, 'video')">Video Calls</button>
             <button class="tablinks" onclick="openTab(event, 'calendar')">Calendar</button>
+            <button class="tablinks" onclick="openTab(event, 'jobs')">Job Search</button>
             <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
         </div>
 
         <div id="home" class="tabcontent">
             <h2>Supporting Reintegration & Community Empowerment</h2>
-            <p>What is Pathway Forward?</p>
             <p>Pathway Forward aims to empower individuals who have served time in jail, prison, probation, or on parole by providing comprehensive support, resources, and opportunities for successful reintegration into society.</p>
         </div>
 
@@ -51,6 +57,8 @@
                 <li>Zoom Calls: Scheduled virtual meetings for community support and resource sharing</li>
                 <li>Event Calendars: Listings of job fairs, educational workshops, community services, and other relevant events</li>
                 <li>Progress Tracking: Tools to monitor educational milestones and personal development goals</li>
+                <li>Job Search: Find jobs in your area and track your applications</li>
+                <li>Resource Directory: Access to local resources and support services</li>
             </ul>
         </div>
 
@@ -64,9 +72,20 @@
             <p>Our event calendar.</p>
         </div>
 
+        <div id="jobs" class="tabcontent">
+            <h2>Job Search</h2>
+            <p>Find jobs in your area and track your applications.</p>
+        </div>
+
         <div id="login" class="tabcontent">
             <h2>Login</h2>
-            <p>Login form for our users.</p>
+            <form>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
         </div>
     </main>
     <footer>
