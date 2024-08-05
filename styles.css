@@ -1,114 +1,90 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f8ff;
-    color: #333;
+    background-color: #f4f4f4;
 }
 
 header {
-    background-color: #87ceeb;
-    color: white;
-    padding: 20px 0;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
     text-align: center;
 }
 
-nav {
-    background-color: #4682b4;
-    padding: 10px;
-    text-align: center;
+header .logo h1 {
+    margin: 0;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
-    margin: 0;
     display: flex;
     justify-content: center;
+    margin: 0;
 }
 
 nav ul li {
-    margin: 0 10px;
+    margin: 0 1rem;
 }
 
 nav ul li a {
-    color: white;
+    color: #fff;
     text-decoration: none;
-    padding: 10px 20px;
-    background-color: #5f9ea0;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
 }
 
-nav ul li a:hover {
-    background-color: #7fb3d5;
-}
-
-main {
-    padding: 20px;
-}
-
-section {
-    padding: 20px;
-    margin: 20px 0;
-    background-color: #e0ffff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    background-color: #87ceeb;
-    color: white;
+.hero {
+    background: url('hero-image.jpg') no-repeat center center/cover;
+    color: #fff;
     text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
-h1, h2 {
-    margin: 10px 0;
-    animation: fadeIn 1s ease-in-out;
-}
-
-p, ul {
-    animation: fadeIn 2s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    padding: 5rem 0;
 }
 
 .tab-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin: 2rem 0;
 }
 
 .tablinks {
-    background-color: #5f9ea0;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    margin: 0 0.2rem;
     border: none;
-    color: white;
-    padding: 14px 20px;
     cursor: pointer;
-    border-radius: 5px;
-    margin: 0 5px;
-    transition: background-color 0.3s ease;
+    font-size: 1rem;
 }
 
 .tablinks:hover {
-    background-color: #7fb3d5;
+    background-color: #555;
 }
 
 .tabcontent {
     display: none;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #e0ffff;
-    animation: fadeIn 1s ease-in-out;
+    padding: 2rem;
+    background-color: #fff;
+    margin: 0 2rem;
+    border: 1px solid #ddd;
+}
+
+.tabcontent h2 {
+    margin-top: 0;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Active tab content */
+.tabcontent.active {
+    display: block;
 }
