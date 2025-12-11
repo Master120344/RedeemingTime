@@ -1,86 +1,265 @@
 bash << 'EOF'
 clear
-printf "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
-printf "┃   🔓 PKG UNLOCKER // macOS Sequoia Edition   ┃\n"
-printf "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n"
+
+RED="$(tput setaf 1 2>/dev/null || echo)"
+GRN="$(tput setaf 2 2>/dev/null || echo)"
+YEL="$(tput setaf 3 2>/dev/null || echo)"
+BLU="$(tput setaf 4 2>/dev/null || echo)"
+MAG="$(tput setaf 5 2>/dev/null || echo)"
+CYN="$(tput setaf 6 2>/dev/null || echo)"
+RST="$(tput sgr0 2>/dev/null || echo)"
+
+section() {
+  printf "\n${BLU}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RST}\n"
+  printf "${MAG}▶ %s${RST}\n" "$1"
+  printf "${BLU}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RST}\n\n"
+}
+
+status_line() {
+  local label="$1"
+  local ok="$2"
+  if [ "$ok" -eq 0 ]; then
+    printf " ${GRN}[ OK ]${RST} %s\n" "$label"
+  else
+    printf " ${RED}[FAIL]${RST} %s\n" "$label"
+  fi
+}
+
+printf "\n${CYN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
+printf "┃        🔓 ULTRA PKG OPENER // macOS SEQUOIA         ┃\n"
+printf "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${RST}\n\n"
 
 USER_NAME="$(whoami)"
 HOST_NAME="$(hostname)"
-OS_VER="$(sw_vers -productVersion)"
+OS_VER="$(sw_vers -productVersion 2>/dev/null || echo '?')"
+HW_MODEL="$(system_profiler SPHardwareDataType 2>/dev/null | awk -F: '/Model Identifier/ {gsub(/^[ \t]+/,"",$2); print $2; exit}')"
 
-printf "👤 User        : %s\n" "$USER_NAME"
-printf "💻 Host        : %s\n" "$HOST_NAME"
-printf "🧬 macOS       : %s\n\n" "$OS_VER"
+printf "${YEL}Session Info${RST}\n"
+printf " 👤 User    : %s\n" "$USER_NAME"
+printf " 💻 Host    : %s\n" "$HOST_NAME"
+printf " 🧬 macOS   : %s\n" "$OS_VER"
+printf " 🧱 Model   : %s\n\n" "${HW_MODEL:-?}"
 
 DOWNLOADS_DIR="$HOME/Downloads"
-printf "📁 Scanning for .pkg in: %s\n" "$DOWNLOADS_DIR"
+section "TARGET SELECTION"
+
+printf " Searching for .pkg in: %s\n" "$DOWNLOADS_DIR"
 
 PKG="$(ls -t "$DOWNLOADS_DIR"/*.pkg 2>/dev/null | head -n 1)"
 
 if [ -z "$PKG" ]; then
-  printf "\n❌ No .pkg files found in %s\n" "$DOWNLOADS_DIR"
-  printf "➡️  Drop the installer .pkg into Downloads and run this again.\n\n"
+  printf "\n${RED} No .pkg files found in Downloads.${RST}\n"
+  printf " Drop the installer .pkg into Downloads and run this again.\n\n"
   exit 1
 fi
 
-printf "✅ Target installer found:\n"
+printf " ${GRN}Newest .pkg found:${RST}\n"
 printf "   %s\n\n" "$PKG"
 
 if command -v stat >/dev/null 2>&1; then
-  FILE_SIZE="$(stat -f "%z" "$PKG" 2>/dev/null || echo "?")"
-  MOD_TIME="$(stat -f "%Sm" -t "%Y-%m-%d %H:%M:%S" "$PKG" 2>/dev/null || echo "?")"
-  printf "📦 Size        : %s bytes\n" "$FILE_SIZE"
-  printf "⏱️  Modified    : %s\n\n" "$MOD_TIME"
+  FILE_SIZE="$(stat -f "%z" "$PKG" 2>/dev/null || echo '?')"
+  MOD_TIME="$(stat -f "%Sm" -t "%Y-%m-%d %H:%M:%S" "$PKG" 2>/dev/null || echo '?')"
+  printf " 📦 Size     : %s bytes\n" "$FILE_SIZE"
+  printf " ⏱️  Modified : %s\n\n" "$MOD_TIME"
 fi
 
-printf "┏━━━━━━━━━━━━━━━━━━━━━━┓\n"
-printf "┃  STEP 1: QUARANTINE  ┃\n"
-printf "┗━━━━━━━━━━━━━━━━━━━━━━┛\n"
-printf "⚙️  Removing quarantine flags with xattr...\n"
+section "PRECHECK: CURRENT SECURITY STATE"
 
-sudo xattr -rd com.apple.quarantine "$PKG" 2>/dev/null || true
+QUAR_BEFORE=1
+if xattr "$PKG" 2>/dev/null | grep -q "com.apple.quarantine"; then
+  QUAR_BEFORE=0
+fi
 
-printf "✅ Quarantine cleanup attempted.\n\n"
+ASSESS_BEFORE_LOG="$(mktemp)"
+ASSESS_BEFORE_RC=1
+if command -v spctl >/dev/null 2>&1; then
+  if spctl --assess -vv "$PKG" >"$ASSESS_BEFORE_LOG" 2>&1; then
+    ASSESS_BEFORE_RC=0
+  else
+    ASSESS_BEFORE_RC=$?
+  fi
+fi
 
-printf "┏━━━━━━━━━━━━━━━━━━━━━━┓\n"
-printf "┃  STEP 2: GATEKEEPER  ┃\n"
-printf "┗━━━━━━━━━━━━━━━━━━━━━━┛\n"
-LABEL_NAME="ApprovedPKG_AUTO"
+status_line "Quarantine tag present before fix" "$QUAR_BEFORE"
+if [ "$ASSESS_BEFORE_RC" -eq 0 ]; then
+  status_line "Gatekeeper assessment before fix (spctl --assess)" 0
+else
+  status_line "Gatekeeper assessment before fix (spctl --assess)" 1
+fi
 
-printf "⚙️  Registering package with spctl label: %s\n" "$LABEL_NAME"
-sudo spctl --add --label "$LABEL_NAME" "$PKG" 2>/dev/null || true
-
-printf "⚙️  Enabling Gatekeeper label: %s\n" "$LABEL_NAME"
-sudo spctl --enable --label "$LABEL_NAME" 2>/dev/null || true
-
-printf "✅ Gatekeeper allow-list step completed.\n\n"
-
-printf "┏━━━━━━━━━━━━━━━━━━━━━━┓\n"
-printf "┃  STEP 3: INSTALLER   ┃\n"
-printf "┗━━━━━━━━━━━━━━━━━━━━━━┛\n"
-printf "🚀 Launching direct install via installer(8)...\n\n"
-
-sudo installer -pkg "$PKG" -target /
-INSTALL_EXIT=$?
-
+printf "\n Gatekeeper raw assessment (before):\n"
+if [ -s "$ASSESS_BEFORE_LOG" ]; then
+  sed 's/^/   · /' "$ASSESS_BEFORE_LOG"
+else
+  printf "   · (no data or spctl not available)\n"
+fi
 printf "\n"
 
-if [ $INSTALL_EXIT -eq 0 ]; then
-  printf "🎉 INSTALLATION STATUS: SUCCESS\n"
-  printf "➡️  The package installed cleanly on this system.\n\n"
+section "STEP 1: QUARANTINE CLEANUP (xattr)"
+
+printf " Executing: xattr -rd com.apple.quarantine\n"
+QUAR_CMD_LOG="$(mktemp)"
+if sudo xattr -rd com.apple.quarantine "$PKG" >"$QUAR_CMD_LOG" 2>&1; then
+  QUAR_CMD_RC=0
 else
-  printf "⚠️  INSTALLATION STATUS: FAILED (exit code %d)\n" "$INSTALL_EXIT"
-  printf "🔍 Most likely causes on macOS %s:\n" "$OS_VER"
-  printf "   • The installer is too old or marked as \"no longer supported\".\n"
-  printf "   • It may contain 32-bit components that Sequoia cannot run.\n"
-  printf "\n"
-  printf "📎 Package path was:\n"
-  printf "   %s\n\n" "$PKG"
-  printf "💡 If you saw a message like \"This application is no longer supported\",\n"
-  printf "   that is a hard compatibility block, not a security block.\n"
+  QUAR_CMD_RC=$?
 fi
 
-printf "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
-printf "┃  SESSION COMPLETE – PKG UNLOCKER   ┃\n"
-printf "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n"
+QUAR_AFTER=1
+if xattr "$PKG" 2>/dev/null | grep -q "com.apple.quarantine"; then
+  QUAR_AFTER=0
+fi
+
+status_line "xattr command executed" "$QUAR_CMD_RC"
+status_line "Quarantine tag removed" "$((1-QUAR_AFTER))"
+
+printf "\n xattr output:\n"
+if [ -s "$QUAR_CMD_LOG" ]; then
+  sed 's/^/   · /' "$QUAR_CMD_LOG"
+else
+  printf "   · (silent success)\n"
+fi
+printf "\n"
+
+section "STEP 2: GATEKEEPER ALLOWLIST (spctl)"
+
+LABEL_NAME="ULTRA_PKG_APPROVED"
+
+SPCTL_ADD_LOG="$(mktemp)"
+SPCTL_ADD_RC=1
+if command -v spctl >/dev/null 2>&1; then
+  printf " Registering package with label: %s\n" "$LABEL_NAME"
+  if sudo spctl --add --label "$LABEL_NAME" "$PKG" >"$SPCTL_ADD_LOG" 2>&1; then
+    SPCTL_ADD_RC=0
+  else
+    SPCTL_ADD_RC=$?
+  fi
+else
+  printf " spctl tool not available on this system.\n"
+fi
+
+SPCTL_ENABLE_LOG="$(mktemp)"
+SPCTL_ENABLE_RC=1
+if command -v spctl >/dev/null 2>&1; then
+  printf " Enabling label: %s\n" "$LABEL_NAME"
+  if sudo spctl --enable --label "$LABEL_NAME" >"$SPCTL_ENABLE_LOG" 2>&1; then
+    SPCTL_ENABLE_RC=0
+  else
+    SPCTL_ENABLE_RC=$?
+  fi
+fi
+
+ASSESS_AFTER_LOG="$(mktemp)"
+ASSESS_AFTER_RC=1
+if command -v spctl >/dev/null 2>&1; then
+  if spctl --assess -vv "$PKG" >"$ASSESS_AFTER_LOG" 2>&1; then
+    ASSESS_AFTER_RC=0
+  else
+    ASSESS_AFTER_RC=$?
+  fi
+fi
+
+status_line "spctl add label" "$SPCTL_ADD_RC"
+status_line "spctl enable label" "$SPCTL_ENABLE_RC"
+if [ "$ASSESS_AFTER_RC" -eq 0 ]; then
+  status_line "Gatekeeper assessment after allowlist" 0
+else
+  status_line "Gatekeeper assessment after allowlist" 1
+fi
+
+printf "\n spctl add output:\n"
+if [ -s "$SPCTL_ADD_LOG" ]; then
+  sed 's/^/   · /' "$SPCTL_ADD_LOG"
+else
+  printf "   · (no output)\n"
+fi
+
+printf "\n spctl enable output:\n"
+if [ -s "$SPCTL_ENABLE_LOG" ]; then
+  sed 's/^/   · /' "$SPCTL_ENABLE_LOG"
+else
+  printf "   · (no output)\n"
+fi
+
+printf "\n Gatekeeper raw assessment (after):\n"
+if [ -s "$ASSESS_AFTER_LOG" ]; then
+  sed 's/^/   · /' "$ASSESS_AFTER_LOG"
+else
+  printf "   · (no data)\n"
+fi
+printf "\n"
+
+section "STEP 3: FORCED INSTALL ATTEMPT (installer)"
+
+INSTALL_LOG="$(mktemp)"
+printf " Executing installer with full logging...\n\n"
+printf "   sudo installer -pkg \"%s\" -target /\n\n" "$PKG"
+
+if sudo installer -pkg "$PKG" -target / >"$INSTALL_LOG" 2>&1; then
+  INSTALL_RC=0
+else
+  INSTALL_RC=$?
+fi
+
+status_line "installer command exit status" "$INSTALL_RC"
+
+printf "\n Installer raw log:\n"
+if [ -s "$INSTALL_LOG" ]; then
+  sed 's/^/   · /' "$INSTALL_LOG"
+else
+  printf "   · (no output)\n"
+fi
+printf "\n"
+
+section "INTELLIGENT DIAGNOSTICS"
+
+UNSUPPORTED=1
+ARCH_ISSUE=1
+PERMISSION_ISSUE=1
+
+if grep -qi "is not supported on this version of macOS" "$INSTALL_LOG"; then
+  UNSUPPORTED=0
+fi
+if grep -Eqi "32-bit|32 bit|architecture not supported" "$INSTALL_LOG"; then
+  ARCH_ISSUE=0
+fi
+if grep -Eqi "permission denied|not permitted|operation not permitted" "$INSTALL_LOG"; then
+  PERMISSION_ISSUE=0
+fi
+
+if [ "$INSTALL_RC" -eq 0 ]; then
+  printf "${GRN} INSTALL RESULT: SUCCESS${RST}\n"
+  printf " The package appears to have installed correctly on this system.\n"
+else
+  printf "${RED} INSTALL RESULT: FAILED (code %d)${RST}\n" "$INSTALL_RC"
+  if [ "$UNSUPPORTED" -eq 0 ]; then
+    printf " Detected reason: Installer reports it is not supported on this macOS version.\n"
+  fi
+  if [ "$ARCH_ISSUE" -eq 0 ]; then
+    printf " Detected reason: Possible 32-bit or incompatible architecture.\n"
+  fi
+  if [ "$PERMISSION_ISSUE" -eq 0 ]; then
+    printf " Detected reason: Permission or entitlement problem during install.\n"
+  fi
+  if [ "$UNSUPPORTED" -ne 0 ] && [ "$ARCH_ISSUE" -ne 0 ] && [ "$PERMISSION_ISSUE" -ne 0 ]; then
+    printf " No obvious text reason detected. Check installer log above for details.\n"
+  fi
+fi
+
+section "FINAL SUMMARY"
+
+status_line "Quarantine fully removed" "$((1-QUAR_AFTER))"
+if [ "$ASSESS_AFTER_RC" -eq 0 ]; then
+  status_line "Gatekeeper now allows this pkg" 0
+else
+  status_line "Gatekeeper may still complain about this pkg" 1
+fi
+status_line "installer finished without fatal error" "$INSTALL_RC"
+
+printf "\n${CYN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
+printf "┃             SESSION COMPLETE – ULTRA PKG             ┃\n"
+printf "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${RST}\n\n"
+
+rm -f "$ASSESS_BEFORE_LOG" "$ASSESS_AFTER_LOG" "$QUAR_CMD_LOG" "$SPCTL_ADD_LOG" "$SPCTL_ENABLE_LOG" "$INSTALL_LOG" 2>/dev/null
+
 EOF
