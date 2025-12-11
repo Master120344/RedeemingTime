@@ -1,0 +1,86 @@
+bash << 'EOF'
+clear
+printf "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
+printf "┃   🔓 PKG UNLOCKER // macOS Sequoia Edition   ┃\n"
+printf "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n"
+
+USER_NAME="$(whoami)"
+HOST_NAME="$(hostname)"
+OS_VER="$(sw_vers -productVersion)"
+
+printf "👤 User        : %s\n" "$USER_NAME"
+printf "💻 Host        : %s\n" "$HOST_NAME"
+printf "🧬 macOS       : %s\n\n" "$OS_VER"
+
+DOWNLOADS_DIR="$HOME/Downloads"
+printf "📁 Scanning for .pkg in: %s\n" "$DOWNLOADS_DIR"
+
+PKG="$(ls -t "$DOWNLOADS_DIR"/*.pkg 2>/dev/null | head -n 1)"
+
+if [ -z "$PKG" ]; then
+  printf "\n❌ No .pkg files found in %s\n" "$DOWNLOADS_DIR"
+  printf "➡️  Drop the installer .pkg into Downloads and run this again.\n\n"
+  exit 1
+fi
+
+printf "✅ Target installer found:\n"
+printf "   %s\n\n" "$PKG"
+
+if command -v stat >/dev/null 2>&1; then
+  FILE_SIZE="$(stat -f "%z" "$PKG" 2>/dev/null || echo "?")"
+  MOD_TIME="$(stat -f "%Sm" -t "%Y-%m-%d %H:%M:%S" "$PKG" 2>/dev/null || echo "?")"
+  printf "📦 Size        : %s bytes\n" "$FILE_SIZE"
+  printf "⏱️  Modified    : %s\n\n" "$MOD_TIME"
+fi
+
+printf "┏━━━━━━━━━━━━━━━━━━━━━━┓\n"
+printf "┃  STEP 1: QUARANTINE  ┃\n"
+printf "┗━━━━━━━━━━━━━━━━━━━━━━┛\n"
+printf "⚙️  Removing quarantine flags with xattr...\n"
+
+sudo xattr -rd com.apple.quarantine "$PKG" 2>/dev/null || true
+
+printf "✅ Quarantine cleanup attempted.\n\n"
+
+printf "┏━━━━━━━━━━━━━━━━━━━━━━┓\n"
+printf "┃  STEP 2: GATEKEEPER  ┃\n"
+printf "┗━━━━━━━━━━━━━━━━━━━━━━┛\n"
+LABEL_NAME="ApprovedPKG_AUTO"
+
+printf "⚙️  Registering package with spctl label: %s\n" "$LABEL_NAME"
+sudo spctl --add --label "$LABEL_NAME" "$PKG" 2>/dev/null || true
+
+printf "⚙️  Enabling Gatekeeper label: %s\n" "$LABEL_NAME"
+sudo spctl --enable --label "$LABEL_NAME" 2>/dev/null || true
+
+printf "✅ Gatekeeper allow-list step completed.\n\n"
+
+printf "┏━━━━━━━━━━━━━━━━━━━━━━┓\n"
+printf "┃  STEP 3: INSTALLER   ┃\n"
+printf "┗━━━━━━━━━━━━━━━━━━━━━━┛\n"
+printf "🚀 Launching direct install via installer(8)...\n\n"
+
+sudo installer -pkg "$PKG" -target /
+INSTALL_EXIT=$?
+
+printf "\n"
+
+if [ $INSTALL_EXIT -eq 0 ]; then
+  printf "🎉 INSTALLATION STATUS: SUCCESS\n"
+  printf "➡️  The package installed cleanly on this system.\n\n"
+else
+  printf "⚠️  INSTALLATION STATUS: FAILED (exit code %d)\n" "$INSTALL_EXIT"
+  printf "🔍 Most likely causes on macOS %s:\n" "$OS_VER"
+  printf "   • The installer is too old or marked as \"no longer supported\".\n"
+  printf "   • It may contain 32-bit components that Sequoia cannot run.\n"
+  printf "\n"
+  printf "📎 Package path was:\n"
+  printf "   %s\n\n" "$PKG"
+  printf "💡 If you saw a message like \"This application is no longer supported\",\n"
+  printf "   that is a hard compatibility block, not a security block.\n"
+fi
+
+printf "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
+printf "┃  SESSION COMPLETE – PKG UNLOCKER   ┃\n"
+printf "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n"
+EOF
